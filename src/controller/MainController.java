@@ -15,7 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javax.swing.JOptionPane;
-import model.Automata;
+import model.Automaton;
 import model.Results;
 import model.State;
 import model.Symbol;
@@ -39,14 +39,14 @@ public class MainController implements Initializable {
     private TableColumn tcLine, tcResult, tcSequence, tcRecognize;
 
     private List<String> texts;
-    private Automata automata;
+    private Automaton automaton;
     private List<State> currentsStates;
     private List<String> recognize;
     private ObservableList<Results> data = null;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        loadAutomata();
+        loadAutomaton();
         tcLine.setCellValueFactory(new PropertyValueFactory<>("line"));
         tcResult.setCellValueFactory(new PropertyValueFactory<>("result"));
         tcSequence.setCellValueFactory(new PropertyValueFactory<>("sequence"));
@@ -90,10 +90,10 @@ public class MainController implements Initializable {
         JOptionPane.showMessageDialog(null, "Made By Kevin Nascimento");
     }
 
-    private void loadAutomata() {
-        automata = new Automata();
+    private void loadAutomaton() {
+        automaton = new Automaton();
 
-        automata.setAlphabet("abc");
+        automaton.setAlphabet("abc");
 
         State q0 = new State(0);
         State q1 = new State(1);
@@ -107,41 +107,41 @@ public class MainController implements Initializable {
         Symbol b = new Symbol('b');
         Symbol c = new Symbol('c');
 
-        automata.setState(q0);
-        automata.setState(q1);
-        automata.setState(q2);
-        automata.setState(q3);
-        automata.setState(q4);
-        automata.setState(q5);
-        automata.setState(q6);
+        automaton.setState(q0);
+        automaton.setState(q1);
+        automaton.setState(q2);
+        automaton.setState(q3);
+        automaton.setState(q4);
+        automaton.setState(q5);
+        automaton.setState(q6);
 
-        automata.setStartState(q0);
-        automata.setFinalState(q2);
-        automata.setFinalState(q3);
-        automata.setFinalState(q5);
+        automaton.setStartState(q0);
+        automaton.setFinalState(q2);
+        automaton.setFinalState(q3);
+        automaton.setFinalState(q5);
 
-        automata.setTransition(q0, q1, a);
-        automata.setTransition(q0, q2, a);
-        automata.setTransition(q0, q3, b);
-        automata.setTransition(q0, q3, c);
-        automata.setTransition(q1, q0, a);
-        automata.setTransition(q2, q2, a);
-        automata.setTransition(q2, q4, b);
-        automata.setTransition(q3, q6, b);
-        automata.setTransition(q3, q6, c);
-        automata.setTransition(q4, q5, a);
-        automata.setTransition(q5, q4, a);
-        automata.setTransition(q5, q4, b);
-        automata.setTransition(q6, q3, b);
-        automata.setTransition(q6, q3, c);
+        automaton.setTransition(q0, q1, a);
+        automaton.setTransition(q0, q2, a);
+        automaton.setTransition(q0, q3, b);
+        automaton.setTransition(q0, q3, c);
+        automaton.setTransition(q1, q0, a);
+        automaton.setTransition(q2, q2, a);
+        automaton.setTransition(q2, q4, b);
+        automaton.setTransition(q3, q6, b);
+        automaton.setTransition(q3, q6, c);
+        automaton.setTransition(q4, q5, a);
+        automaton.setTransition(q5, q4, a);
+        automaton.setTransition(q5, q4, b);
+        automaton.setTransition(q6, q3, b);
+        automaton.setTransition(q6, q3, c);
     }
 
     private Results testWord(Word word) {
         List<Symbol> symbols = word.getSymbols();
         recognize = new ArrayList<>();
         currentsStates = new ArrayList<>();
-        currentsStates.add(automata.getStartState());
-        recognize.add(automata.getStartState().getName());
+        currentsStates.add(automaton.getStartState());
+        recognize.add(automaton.getStartState().getName());
         symbols.stream().forEach((Symbol s) -> {
             if (currentsStates.isEmpty()) {
                 if (!recognize.contains("error")) {
@@ -158,7 +158,7 @@ public class MainController implements Initializable {
         } else if (currentsStates.isEmpty()) {
             return new Results(word.getLine(), "error: word is not valid", word.toString(), recognize.toString());
         } else {
-            if (automata.isFinalState(recognize.get(recognize.size() - 1))) {
+            if (automaton.isFinalState(recognize.get(recognize.size() - 1))) {
                 return new Results(word.getLine(), "valid word", word.toString(), recognize.toString());
             } else {
                 recognize.add("error");
@@ -173,7 +173,7 @@ public class MainController implements Initializable {
         String stageNames = "";
         for (State s : currentsStates) {
             statesToRemove.add(s);
-            Set<Transition> transitions = automata.getTransitions(s, currentSymbol);
+            Set<Transition> transitions = automaton.getTransitions(s, currentSymbol);
             for (Transition t : transitions) {
                 statesToAdd.add(t.getDestiny());
                 stageNames += t.getDestiny().getName();
@@ -188,7 +188,7 @@ public class MainController implements Initializable {
 
     private boolean isValidWord(Word word) {
         List<Symbol> symbols = word.getSymbols();
-        return symbols.stream().allMatch((Symbol s) -> (automata.getAlphabet().contains(String.valueOf(s.getValue()).toUpperCase())));
+        return symbols.stream().allMatch((Symbol s) -> (automaton.getAlphabet().contains(String.valueOf(s.getValue()).toUpperCase())));
     }
 
 }
