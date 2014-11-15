@@ -8,20 +8,20 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <children>
-      <TextArea prefHeight="200.0" prefWidth="600.0" />
+      <TextArea fx:id="textArea" prefHeight="200.0" prefWidth="600.0" />
       <Pane layoutY="208.0" prefHeight="25.0" prefWidth="601.0">
          <children>
-            <Button fx:id="btnLimpar" layoutX="224.0" mnemonicParsing="false" onAction="#handleLimpar" prefHeight="25.0" prefWidth="160.0" text="Limpar" />
-            <Button fx:id="btnEquipe" layoutX="431.0" mnemonicParsing="false" onAction="#handleEquipe" prefHeight="25.0" prefWidth="160.0" text="Equipe" />
-            <Button fx:id="btnAnalisar" layoutX="9.0" mnemonicParsing="false" onAction="#handleAnalisar" prefHeight="25.0" prefWidth="160.0" text="Analisar" />
+            <Button fx:id="btnLimpar" layoutX="224.0" mnemonicParsing="false" onAction="#handleLimpar" prefHeight="25.0" prefWidth="160.0" text="Clean" />
+            <Button fx:id="btnEquipe" layoutX="431.0" mnemonicParsing="false" onAction="#handleEquipe" prefHeight="25.0" prefWidth="160.0" text="Academic" />
+            <Button fx:id="btnAnalisar" layoutX="9.0" mnemonicParsing="false" onAction="#handleAnalisar" prefHeight="25.0" prefWidth="160.0" text="Analyze" />
          </children>
       </Pane>
-      <TableView layoutY="240.0" prefHeight="200.0" prefWidth="600.0">
+      <TableView fx:id="tvResult" layoutY="240.0" prefHeight="200.0" prefWidth="600.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Linha" />
-          <TableColumn prefWidth="112.0" text="Resultado" />
-            <TableColumn prefWidth="169.0" text="Sequencia" />
-            <TableColumn prefWidth="243.0" text="Reconhecimento" />
+          <TableColumn fx:id="tcLine" prefWidth="75.0" text="Line" />
+          <TableColumn fx:id="tcResult" prefWidth="112.0" text="Result" />
+            <TableColumn fx:id="tcSequence" prefWidth="169.0" text="Sequence" />
+            <TableColumn fx:id="tcRecognize" prefWidth="243.0" text="Recognition" />
         </columns>
       </TableView>
    </children>
